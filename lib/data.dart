@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final baseProvider = Provider<int>(
+final baseProvider = StateProvider<int>(
   (ref) => 0,
 );
 

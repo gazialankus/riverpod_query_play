@@ -17,14 +17,14 @@ class AppRoot extends StatelessWidget {
   }
 }
 
-class MainPage extends StatefulWidget {
+class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key});
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  ConsumerState<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends ConsumerState<MainPage> {
   var overridingValue = 1;
 
   @override
@@ -34,17 +34,13 @@ class _MainPageState extends State<MainPage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ProviderScope(
-              overrides: [
-                baseProvider.overrideWithValue(overridingValue),
-              ],
-              child: const MyConsumer(),
-            ),
+            const MyConsumer(),
             ElevatedButton(
               onPressed: () {
                 setState(() {
                   ++overridingValue;
                 });
+                ref.read(baseProvider.notifier).state = overridingValue;
               },
               child: const Text('increment'),
             ),
@@ -60,8 +56,8 @@ class MyConsumer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // the print line in listen below is executed only when this line is commented out
-    // If you uncomment this line, the print line is not executed anymore.
+    // When we use a StateProvider instead of ProviderScope, listen
+    // always run if we have this line or not
     //
     // final q = ref.watch(baseProvider);
 
