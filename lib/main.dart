@@ -65,6 +65,11 @@ class MyConsumer extends ConsumerWidget {
     //
     // final q = ref.watch(baseProvider);
 
+    // using a proxy provider bypasses this issue.
+    // this is a dummy provider that relays baseProvider
+    // baseProvider above still prevents listen. however this one allows listen.
+    final c = ref.watch(baseProxyProvider);
+
     ref.listen(
       dependentProvider,
       (previous, next) {

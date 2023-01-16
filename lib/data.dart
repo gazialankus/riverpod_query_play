@@ -11,3 +11,10 @@ final dependentProvider = Provider<String>(
   },
   dependencies: [baseProvider],
 );
+
+final baseProxyProvider = Provider<int>(
+  (ref) {
+    return ref.watch(baseProvider);
+  },
+  dependencies: [baseProvider],
+);
