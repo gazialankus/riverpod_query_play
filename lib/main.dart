@@ -69,11 +69,16 @@ class MyConsumer extends ConsumerWidget {
     // this is a dummy provider that relays baseProvider
     // baseProvider above still prevents listen. however this one allows listen.
     final c = ref.watch(baseProxyProvider);
+    print(c);
 
+    // print('q: $q, c: $c');
     ref.listen(
       dependentProvider,
       (previous, next) {
         print('Listened to $previous -> $next');
+        showDialog(context: context, builder: (context) => AlertDialog(
+          title: Text('hello'),
+        ),);
       },
     );
 
